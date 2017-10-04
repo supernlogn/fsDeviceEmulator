@@ -378,7 +378,7 @@ DRESULT USER_ioctl(
   case GET_BLOCK_SIZE:
   {
     DWORD *dbuff = (buff);
-    *dbuff = (DWORD)(BLOCK_SIZE / SECTOR_SIZE); // 128 uniform blocks of 256 kByte each in sector unit size
+    *dbuff = (DWORD)(BLOCK_SIZE); // 128 uniform blocks of 256 kByte each in sector unit size
     break;
   }
   case CTRL_TRIM:
