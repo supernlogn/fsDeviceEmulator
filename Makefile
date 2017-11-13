@@ -37,8 +37,13 @@ Middlewares \
 Application \
 dev_driver
 
-# firmware library path
-PERIFLIB_PATH = 
+# JSON action file path
+DEVICE_ACTION_FILE_NAME=\"device_action.json\"
+# virtual device memory file path
+DEVICE_FILE_NAME_XXD ="device.dat"
+DEVICE_FILE_NAME=\"device.dat\"
+# virtual device memory hex file path
+DEVICE_HEX_FILE_NAME="device.hex"
 
 # Build path
 BUILD_DIR = build
@@ -126,9 +131,12 @@ ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
 endif
 
+#Defines
+DEFINES_FLAGS = -DDEVICE_ACTION_FILE_NAME=$(DEVICE_ACTION_FILE_NAME) -DDEVICE_FILE_NAME=$(DEVICE_FILE_NAME)
 
 # Generate dependency information
-CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)"
+CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" $(DEFINES_FLAGS)
+
 
 
 #######################################
@@ -179,18 +187,18 @@ $(BUILD_DIR):
 #######################################
 # clean up
 #######################################
-clean:
+clean: clean_data
 	-rm -fR .dep $(BUILD_DIR)
 
 clean_data:
-	rm s25fl.dat s25fl.hex
+	rm *.json *.dat *.hex
 
 #######################################
 # execute
 #######################################
 run: $(BUILD_DIR)/$(TARGET).elf
 	./$(BUILD_DIR)/$(TARGET).elf
-	xxd -b s25fl.dat > s25fl.hex
+	xxd -b $(DEVICE_FILE_NAME_XXD) > $(DEVICE_HEX_FILE_NAME)
 
 #######################################
 # debug

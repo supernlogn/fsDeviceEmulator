@@ -9,24 +9,33 @@
 
 #define osWaitForever (0xFFFFFFFFU)
 
+/* These parameters below can be set outside the program. */
+
 #define NUM_BLOCKS 512
 #define BLOCK_SIZE (64 * 1024)
 #define FLASH_SIZE (NUM_BLOCKS * BLOCK_SIZE)
 #define LAST_BLOCK_ADDR ((NUM_BLOCKS - 1) * BLOCK_SIZE)
 #define MAX_WRITE_SIZE 256U
 
-#define DEVICE_FILE_NAME "s25fl.dat"
-#define DEVICE_ACTION_FILE_NAME "s25fl_action.json"
+#ifndef DEVICE_FILE_NAME
+  #define DEVICE_FILE_NAME "s25fl.dat"
+#endif
 
-#define OR_DEV 0
-#define AND_DEV 1
-#define DEVICE_TYPE AND_DEV
+#ifndef DEVICE_ACTION_FILE_NAME
+  #define DEVICE_ACTION_FILE_NAME "s25fl_action.json"
+#endif
 
+#define OR_DEV_TYPE 0
+#define AND_DEV_TYPE 1
 
-#if DEVICE_TYPE == OR_DEV
+#ifndef DEVICE_TYPE
+  #define DEVICE_TYPE AND_DEV_TYPE
+#endif
+
+#if DEVICE_TYPE == OR_DEV_TYPE
 #define DEV_OP(x,y) x | y
 #define DEV_ERASE_CHAR 0
-#elif DEVICE_TYPE == AND_DEV
+#elif DEVICE_TYPE == AND_DEV_TYPE
 #define DEV_OP(x,y) x & y
 #define DEV_ERASE_CHAR 0xFF
 #endif

@@ -9,10 +9,12 @@ FIL fp;
 char file_path[100];
 
 unsigned char dataBuffer1[512];
-unsigned char dataBuffer2[512];
+// unsigned char dataBuffer2[512];
+
 int main() 
 {
     int i;
+    // fill a buffer with values
     for (i = 0; i < sizeof(dataBuffer1); ++i)
     {
         dataBuffer1[i] = i;
@@ -20,6 +22,7 @@ int main()
     
     MX_FATFS_Init();
     volatile FRESULT fres = FR_OK;
+    // create valid fatfs volume
     fres |= disk_initialize(0);
     if(fres == FR_OK)
     {
@@ -37,18 +40,20 @@ int main()
     }
     f_mount(NULL, USER_Path, 1);
 
+    // mount the valid FATFS volume just created
     fres = f_mount(&FatFs, USER_Path, 1);
     if(fres == FR_OK)
     {
         printf("%s:%d, fres = %d\n", __FILE__, __LINE__, fres);
     }
 
-    // sprintf(file_path,"%smydata.txt",USER_Path);
-    // UINT bytes_written, bytes_read;
+    sprintf(file_path,"%smydata.txt",USER_Path);
+    UINT bytes_written, bytes_read;
 
-    // fres = f_open(&fp, file_path, FA_CREATE_ALWAYS | FA_WRITE);
-    // fres = f_write(&fp, dataBuffer1, sizeof(dataBuffer1), &bytes_written);
-    // fres = f_close(&fp);
+    // write databuffer1 to a file named mydata.txt
+    fres = f_open(&fp, file_path, FA_CREATE_ALWAYS | FA_WRITE);
+    fres = f_write(&fp, dataBuffer1, sizeof(dataBuffer1), &bytes_written);
+    fres = f_close(&fp);
 
     // fres = f_open(&fp, file_path, FA_READ | FA_OPEN_EXISTING);
     // fres = f_read(&fp, dataBuffer2, sizeof(dataBuffer2), &bytes_read);
@@ -58,7 +63,5 @@ int main()
     //     printf("%d, ", dataBuffer2[i]);
     // }
 
-    printf("\nhahahaha\n");
     return 0;
-
 }
