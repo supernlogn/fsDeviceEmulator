@@ -46,11 +46,11 @@ For debuging a filesystem directly type in terminal:
 make clean; make run;
 ```
 
-During debug, watch as the json file s25fl_action.json changes due to filesystem actions 
-and how the raw device memory also changes in s25fl.dat. Use the command below to see the
+During debug, watch as the json file device_action.json changes due to filesystem actions 
+and how the raw device memory also changes in device.dat. Use the command below to see the
 hex file of memory any time:
 ```bash
-xxd -b s25fl.dat > s25fl.hex
+xxd -b device.dat > device.hex
 ```
 
 
