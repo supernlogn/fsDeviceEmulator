@@ -2,7 +2,7 @@
 
 ### About
 This is an emulator of a storage device. It can be used to
-analyze how an implemented file system works. Also
+analyze how an implemented file system works. An example of how to handle FATfs is included. Also
 the installation is kept as simple as possible.
 
 ### Dependencies & Platforms
@@ -11,12 +11,12 @@ Currently this software has only been tested in Ubuntu Linux.
 - Libraries needed
 1. libunwind
 
-- Programs required:
+- External programs required:
 1. xxd
 2. ddd
 
 ### Configuration
-If libunwind is not install to your system you have 2 options:
+If libunwind is not already installed to your system you have 2 options:
 1. install it from source
 2. install it via package manager (only for unix like systems)
 
